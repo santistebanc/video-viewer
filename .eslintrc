@@ -1,0 +1,13 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": 0,
+    "linebreak-style": ["error", "windows"],
+    "import/extensions": [0, { "js": "always", "jsx": "always" }]
+  }
+}
