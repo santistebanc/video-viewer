@@ -12,9 +12,8 @@ module.exports = {
       include: path.join(__dirname, '/client/src'),
       use: [{
         loader: 'babel-loader',
-        options: { presets: ['react', 'es2015'] },
+        options: { presets: ['react', 'es2015', 'stage-2'] },
       }]
     }],
-  },
-  watch: true
+  }
 };

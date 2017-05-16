@@ -4,8 +4,10 @@
   "description": "app to view videos from cloud service",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --use_strict index.js",
-    "bundle": "webpack",
+    "start": "npm build && node index.js",
+    "build": "webpack",
+    "dev": "nodemon --use_strict index.js",
+    "bundle": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +21,7 @@
   },
   "homepage": "https://github.com/santistebanc/video-viewer#readme",
   "dependencies": {
+    "axios": "^0.16.1",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "material-ui": "^0.18.1",
@@ -35,6 +38,7 @@
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.0",
     "eslint-plugin-import": "^2.2.0",

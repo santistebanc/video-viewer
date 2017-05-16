@@ -15,6 +15,7 @@ app.get('*', (req, res) => {
 
 // tell the app to parse HTTP body messages
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // routes
 const authRoutes = require('./server/routes/auth');

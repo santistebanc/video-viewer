@@ -1,56 +1,39 @@
 import React from 'react';
+import axios from 'axios';
 import SignUpForm from '../components/SignUpForm.jsx';
-
 
 class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { errors: {}, user: { email: '', name: '', password: '' } };
-    this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
   }
-  changeUser(event) {
+  changeUser = (event) => {
     const field = event.target.name;
     const user = this.state.user;
     user[field] = event.target.value;
     this.setState({ user });
   }
-  processForm(event) {
+  processForm = (event) => {
     event.preventDefault();
-    const name = encodeURIComponent(this.state.user.name);
-    const email = encodeURIComponent(this.state.user.email);
-    const password = encodeURIComponent(this.state.user.password);
-    const formData = `name=${name}&email=${email}&password=${password}`;
-
-    // create an AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/signup');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
-        this.setState({
-          errors: {}
-        });
-
+    axios.post('/auth/signup', {
+      name: this.state.user.name,
+      email: this.state.user.email,
+      password: this.state.user.password
+    })
+    .then((response) => {
+      console.log(response.data);
+      if(response.data.success){
         console.log('The form is valid');
-      } else {
-        // failure
-
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
-
-        this.setState({
-          errors
-        });
+        this.setState({ errors: {} });
+      }else{
+        console.log('The form is NOT valid');
+        this.setState({ errors: response.data.errors });
       }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    xhr.send(formData);
   }
-
   render() {
     return (
       <SignUpForm
@@ -61,7 +44,6 @@ class SignUpPage extends React.Component {
       />
     );
   }
-
 }
 
 export default SignUpPage;
