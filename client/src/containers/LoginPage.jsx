@@ -1,12 +1,21 @@
 import React from 'react';
+import PropTypes from 'react-proptypes';
 import axios from 'axios';
 import LoginForm from '../components/LoginForm.jsx';
+import Auth from '../modules/Auth';
 
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { errors: {}, user: { email: '', password: '' } };
+    const storedMessage = localStorage.getItem('successMessage');
+    let successMessage = '';
+
+    if (storedMessage) {
+      successMessage = storedMessage;
+      localStorage.removeItem('successMessage');
+    }
+    this.state = { errors: {}, successMessage, user: { email: '', password: '' } };
   }
   changeUser = (event) => {
     const field = event.target.name;
@@ -16,23 +25,23 @@ class LoginPage extends React.Component {
   }
   processForm = (event) => {
     event.preventDefault();
+    
+    const afterRes = (data) => {
+      console.log(data.success?'The form is valid':'The form is NOT valid');
+      const errorsobj = {...data.errors, summary: data.message};
+      this.setState({ errors: (errorsobj || {}) });
+      if(data.success){
+        Auth.authenticateUser(data.token);
+        this.props.history.push('/');
+      }
+    }
 
     axios.post('/auth/login', {
       email: this.state.user.email,
       password: this.state.user.password
     })
-    .then((response) => {
-      if(response.data.success){
-        console.log('The form is valid');
-        this.setState({ errors: {} });
-      }else{
-        console.log('The form is NOT valid');
-        this.setState({ errors: response.data.errors });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    .then((res) => { afterRes(res.data) })
+    .catch((error) => { error.response && afterRes(error.response.data) });
   }
   render() {
     return (
@@ -40,11 +49,16 @@ class LoginPage extends React.Component {
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}
+        successMessage={this.state.successMessage}
         user={this.state.user}
       />
     );
   }
 
 }
+
+LoginPage.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 export default LoginPage;

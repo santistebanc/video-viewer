@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-size: 16px;
   font-family: 'roboto';
+  background-color: #222;
 }
 
 a {
@@ -54,7 +55,7 @@ a:hover {
 }
 
 .field-line, .button-line {
-  padding: 16px;
+  padding: 8px;
 }
 
 .error-message {

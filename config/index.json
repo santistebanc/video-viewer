@@ -1,0 +1,4 @@
+{
+  "dbUri": "mongodb://admin:1234@ds143191.mlab.com:43191/video-viewer-db",
+  "jwtSecret": "a secret phrase!!"
+}

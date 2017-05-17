@@ -22,9 +22,14 @@
   "homepage": "https://github.com/santistebanc/video-viewer#readme",
   "dependencies": {
     "axios": "^0.16.1",
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
     "material-ui": "^0.18.1",
+    "mongoose": "^4.9.9",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-proptypes": "^1.0.0",
@@ -42,6 +47,9 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.0",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.2",
+    "file-loader": "^0.11.1",
+    "image-webpack-loader": "^3.3.1",
     "nodemon": "^1.11.0",
     "webpack": "^2.5.1"
   }

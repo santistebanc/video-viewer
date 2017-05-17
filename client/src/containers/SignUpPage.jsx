@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'react-proptypes';
 import axios from 'axios';
 import SignUpForm from '../components/SignUpForm.jsx';
 
@@ -15,24 +16,24 @@ class SignUpPage extends React.Component {
   }
   processForm = (event) => {
     event.preventDefault();
+
+    const afterRes = (data) => {
+      console.log(data.success?'The form is valid':'The form is NOT valid');
+      const errorsobj = {...data.errors, summary: data.message};
+      this.setState({ errors: (errorsobj || {}) });
+      if(data.success){
+        localStorage.setItem('successMessage', data.message);
+        this.props.history.push('/login');
+      }
+    }
+
     axios.post('/auth/signup', {
       name: this.state.user.name,
       email: this.state.user.email,
       password: this.state.user.password
     })
-    .then((response) => {
-      console.log(response.data);
-      if(response.data.success){
-        console.log('The form is valid');
-        this.setState({ errors: {} });
-      }else{
-        console.log('The form is NOT valid');
-        this.setState({ errors: response.data.errors });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    .then((res) => { afterRes(res.data) })
+    .catch((error) => { error.response && afterRes(error.response.data) });
   }
   render() {
     return (
@@ -45,5 +46,9 @@ class SignUpPage extends React.Component {
     );
   }
 }
+
+SignUpPage.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 export default SignUpPage;

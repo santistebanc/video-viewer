@@ -6,11 +6,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 
-const LoginForm = ({ onSubmit, onChange, errors, user }) => (
+const LoginForm = ({ onSubmit, onChange, errors, successMessage, user }) => (
   <Card className="container">
     <form action="/" onSubmit={onSubmit}>
       <h2 className="card-heading">Login</h2>
 
+      {successMessage && <p className="success-message">{successMessage}</p>}
       {errors.summary && <p className="error-message">{errors.summary}</p>}
 
       <div className="field-line">
@@ -51,6 +52,7 @@ LoginForm.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string
   }).isRequired,
+  successMessage: PropTypes.string.isRequired,
   user: PropTypes.shape({
     summary: PropTypes.string,
     email: PropTypes.string,

@@ -6,6 +6,7 @@ module.exports = {
     path: path.join(__dirname, '/client/dist/js'),
     filename: 'script.js',
   },
+  devtool: 'source-map',
   module: {
     rules: [{
       test: /\.jsx?$/,
@@ -14,6 +15,16 @@ module.exports = {
         loader: 'babel-loader',
         options: { presets: ['react', 'es2015', 'stage-2'] },
       }]
-    }],
+    },
+    {
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      use: [{
+        loader: 'file-loader',
+        options: { name: '/img/[name].[ext]' },
+      },
+      {
+        loader: 'image-webpack-loader'
+      }]
+    }]
   }
 };
