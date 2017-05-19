@@ -4,11 +4,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config');
+const cors = require('cors');
+let request = require('request');
+
+var api_url = "https://api.vdocipher.com/v2/";
+var secret_key = "27157325160ce094e59c4b2482db5878ea57dadd42b2aea06a0d44c229bbd27d";
 
 // connect to the database and load models
 require('./server/models').connect(config.dbUri);
 
 const app = express();
+
+//use cors
+app.use(cors());
+
 // tell the app to look for static files in these directories
 app.use(express.static('./server/static/'));
 app.use(express.static('./client/dist/'));
@@ -36,6 +45,21 @@ app.use('/api', apiRoutes);
 
 app.get('/*', function(req, res){
   res.sendFile(__dirname + '/server/static/index.html');
+});
+
+app.post('/video', function(req, res){
+  request.post({ url: api_url + "otp", qs: { video : req.body.video }, form: { clientSecretKey : secret_key } },
+  function(error, response, body){
+		if (error){
+      send(error);
+			return false;
+		}
+    if (response.statusCode !== 200) {
+      send(response);
+			return false;
+    }
+		  res.json(JSON.parse(body));
+	});
 });
 
 // start the server

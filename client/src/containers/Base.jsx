@@ -31,17 +31,15 @@ const Base = () => (
 
     <Switch>
       <Route exact path="/" component={HomePage} />
-      <Route path="/dashboard" render={(props)=>(Auth.isUserAuthenticated()?<DashboardPage/>:<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)} />
+      <Route path="/dashboard" render={(props)=>(
+        Auth.isUserAuthenticated()?<DashboardPage/>:<Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+        )} />
       <Route path="/login" component={LoginPage} />
       <Route path="/signup" component={SignUpPage} />
       <Route path="/logout" render={props => {
         Auth.deauthenticateUser();
         return <Redirect to={{ pathname: '/login' }}/>
       }}/>
-      <Route path="/logout" render={(props) => {
-        Auth.deauthenticateUser();
-        props.history;
-      }} />
     </Switch>
 
   </div>
