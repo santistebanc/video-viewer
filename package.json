@@ -31,6 +31,7 @@
     "mongoose": "^4.9.9",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "querystring": "^0.2.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-proptypes": "^1.0.0",
@@ -38,7 +39,8 @@
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "request": "^2.81.0",
-    "validator": "^7.0.0"
+    "validator": "^7.0.0",
+    "video.js": "^5.19.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

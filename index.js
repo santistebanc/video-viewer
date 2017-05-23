@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config');
 const cors = require('cors');
-let request = require('request');
+const request = require('request');
+const axios = require('axios');
+var querystring = require('querystring');
 
 var api_url = "https://api.vdocipher.com/v2/";
 var secret_key = "27157325160ce094e59c4b2482db5878ea57dadd42b2aea06a0d44c229bbd27d";
@@ -47,19 +49,33 @@ app.get('/*', function(req, res){
   res.sendFile(__dirname + '/server/static/index.html');
 });
 
+var an = [
+{'type':'text', 'text':'static text', 'alpha':'0.8' , 'x':'10', 'y':'100', 'color':'0xFF0000', 'size':'40'}
+];
+
+var newan = JSON.stringify(an);
+
 app.post('/video', function(req, res){
+  // axios.post(api_url + "otp", {headers: {'content-type' : 'application/x-www-form-urlencoded'}, params: {video: req.body.video}})
+  //   .then((response) => { console.log("well done", response.data);  res.send("si paso") })
+  //   .catch((error) => { console.log("here", error.response); res.send("errorsaso") });
+
+  console.log(newan);
+
   request.post({ url: api_url + "otp", qs: { video : req.body.video }, form: { clientSecretKey : secret_key } },
   function(error, response, body){
+    console.log("here");
 		if (error){
-      send(error);
+      res.send(error);
 			return false;
 		}
     if (response.statusCode !== 200) {
-      send(response);
+      res.send(response);
 			return false;
     }
 		  res.json(JSON.parse(body));
 	});
+
 });
 
 // start the server

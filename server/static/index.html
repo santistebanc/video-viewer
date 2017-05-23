@@ -2,19 +2,25 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Video Viewer</title>
+  <title>México en Dron</title>
   <link rel="stylesheet" href="/css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet">
+	<script src="http://vjs.zencdn.net/4.1/video.js"></script>
+  <script>
+    (function(d, t, s, id){
+    var el, trg = d.getElementsByTagName(t)[0];
+    if(!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://watchpass.net/prepare/59235b2885781.js';
+        trg.appendChild(js,trg);
+    }
+})(document, 'head', 'script', 'streamapi-el');
+    </script>
 </head>
 <body>
   <div id="root"></div>
-
   <script src="/js/script.js"></script>
-    <script>
-	(function(v,i,d,e,o){v[o]=v[o]||{}; v[o].add = v[o].add || function V(a){ (v[o].d=v[o].d||[]).push(a);};
-	if(!v[o].l) { v[o].l=1*new Date(); a=i.createElement(d), m=i.getElementsByTagName(d)[0];
-	a.async=1; a.src=e; m.parentNode.insertBefore(a,m);}
-	})(window,document,'script','//de122v0opjemw.cloudfront.net/vdo.js','vdo');
-</script>
 </body>
 </html>

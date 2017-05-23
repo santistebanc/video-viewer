@@ -1,34 +1,77 @@
 import React from 'react';
-import axios from 'axios';
+import { GridList, GridTile } from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
+import Subheader from 'material-ui/Subheader';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import Auth from '../modules/Auth';
+import videos from '../data.js';
 
-import cameraIcon from '../../../server/static/img/camera.png';
-
-// import request from 'request';
-
-const TheVideo = ({otp}) => (
-  <div id={"vdo"+otp} style={{height:'400px', width:'640px', maxWidth:'100%', margin: '0 auto'}} />
-);
-
-const video_id = "275a21943cce028856f8adc27e5b0801";
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    padding: '10px'
+  },
+  gridList: {
+    width: 'auto',
+    height: 'auto',
+    overflowY: 'auto',
+  },
+};
 
 class Videos extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { otp: '' };
+    this.videoelements = [];
   }
-  componentDidMount() {
-    axios.post('/video', {video: video_id})
-    .then((res) => { 
-      this.setState({ otp: res.data.otp });
-      window.vdo.add({ o: res.data.otp });
-     })
-    .catch((error) => { console.log("Error when loading the video",error) });
+  handleMouseEnter = (e) => {
+    !this.props.autoplay && e.target.play();
+  }
+  handleMouseLeave = (e) => {
+    !this.props.autoplay && e.target.pause();
+  }
+  handleClickVideo = (id) => {
+    this.props.onClickVideo(id);
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.autoplay){
+      this.videoelements.forEach((vid)=>{
+        vid.play();
+      })
+    }else{
+      this.videoelements.forEach((vid)=>{
+        vid.pause();
+      })
+    }
   }
   render() {
-    return (<TheVideo otp={this.state.otp} />);
+    console.log(this.props.autoplay)
+    return (
+      <div style={styles.root}>
+        <GridList
+      cellHeight={'auto'}
+      cols={3}
+      style={styles.gridList}
+    >
+      {videos.map((tile, i) => (
+        <GridTile key={i}>
+          <video ref={(video) => { this.videoelements[i] = video; }}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+          onClick={this.handleClickVideo.bind(this,tile.id)} 
+          loop 
+          autoPlay={this.props.autoplay} 
+          preload={'auto'}
+          className="video-js">
+          <source src={tile.src} type="video/mp4"></source>
+        </video>
+        </GridTile>
+      ))}
+    </GridList>
+      </div>
+    )
   }
-
 }
 
 export default Videos;

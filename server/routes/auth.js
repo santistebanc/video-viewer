@@ -11,18 +11,18 @@ function validateSignupForm(payload) {
 
   if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
     isFormValid = false;
-    errors.email = 'Please provide a correct email address.';
+    errors.email = 'Porfavor ingresa un email correcto.';
   }
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
     isFormValid = false;
-    errors.password = 'Password must have at least 8 characters.';
+    errors.password = 'Contraseña debe llevar al menos 8 caracteres.';
   }
   if (!payload || typeof payload.name !== 'string' || payload.name.trim().length === 0) {
     isFormValid = false;
-    errors.name = 'Please provide your name.';
+    errors.name = 'Porfavor ingresa tu nombre.';
   }
   if (!isFormValid) {
-    message = 'Check the form for errors.';
+    message = 'La forma tiene errores.';
   }
   return { success: isFormValid, message, errors};
 }
@@ -33,14 +33,14 @@ function validateLoginForm(payload) {
 
   if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
     isFormValid = false;
-    errors.email = 'Please provide your email address.';
+    errors.email = 'Porfavor ingresa tu email';
   }
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
     isFormValid = false;
-    errors.password = 'Please provide your password.';
+    errors.password = 'Porfavor ingresa tu contraseña';
   }
   if (!isFormValid) {
-    message = 'Check the form for errors.';
+    message = 'La forma tiene errores.';
   }
   return { success: isFormValid, message, errors };
 }
@@ -59,22 +59,22 @@ router.post('/signup', (req, res, next) => {
         // the 409 HTTP status code is for conflict error
         return res.status(409).json({
           success: false,
-          message: 'Check the form for errors.',
+          message: 'La forma tiene errores.',
           errors: {
-            email: 'This email is already taken.'
+            email: 'Este email ya ha sido tomado.'
           }
         });
       }
 
       return res.status(400).json({
         success: false,
-        message: 'Could not process the form.'
+        message: 'No se pudo procesar la forma.'
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: 'You have successfully signed up! Now you should be able to log in.'
+      message: 'Registro exitoso. Ya puedes iniciar sesión.'
     });
   })(req, res, next);
 });
@@ -97,14 +97,14 @@ router.post('/login', (req, res, next) => {
 
       return res.status(400).json({
         success: false,
-        message: 'Could not process the form.'
+        message: 'La forma tiene errores.'
       });
     }
 
 
     return res.json({
       success: true,
-      message: 'You have successfully logged in!',
+      message: 'Inicio de sesión exitoso',
       token,
       user: userData
     });

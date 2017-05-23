@@ -7,15 +7,15 @@ import TextField from 'material-ui/TextField';
 
 
 const SignUpForm = ({ onSubmit, onChange, errors, user }) => (
-  <Card className="container">
+  <Card className="container text-center">
     <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">Sign Up</h2>
+      <h2 className="card-heading">Registro de usuario</h2>
 
       {errors.summary && <p className="error-message">{errors.summary}</p>}
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Name"
+          floatingLabelText="Nombre"
           name="name"
           errorText={errors.name}
           onChange={onChange}
@@ -35,7 +35,7 @@ const SignUpForm = ({ onSubmit, onChange, errors, user }) => (
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Password"
+          floatingLabelText="Contraseña"
           type="password"
           name="password"
           onChange={onChange}
@@ -45,10 +45,10 @@ const SignUpForm = ({ onSubmit, onChange, errors, user }) => (
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Create New Account" primary />
+        <RaisedButton type="submit" label="Crear cuenta nueva" primary />
       </div>
 
-      <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
+      <CardText>Ya tienes cuenta? <Link to={'/login'}>Iniciar sesión</Link></CardText>
     </form>
   </Card>
 );
