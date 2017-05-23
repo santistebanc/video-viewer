@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import videos from '../data.js';
+import VideoPlayer from '../components/VideoPlayer.jsx';
 
 const findVideo = (id) => {
   return videos.find((it)=>it.id==id).src;
@@ -10,10 +11,7 @@ const findVideo = (id) => {
 const VideoPage = ({match}) => (
   <Card className= "container" >
     <CardMedia>
-      <video controls autoPlay preload={'auto'}
-          className="video-js">
-          <source src={findVideo(match.params.id)} type="video/mp4"></source>
-        </video>
+      <VideoPlayer controls autoPlay fluid loop preload={'auto'} src={findVideo(match.params.id)} />
     </CardMedia>
     <CardTitle title={`Video ${match.params.id}`} subtitle="subtítulo aquí" />
     <CardText>

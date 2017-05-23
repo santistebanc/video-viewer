@@ -8,6 +8,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Base from './containers/Base.jsx';
 
+import 'video.js/dist/video.js';
+
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
 
